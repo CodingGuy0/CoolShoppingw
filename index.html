@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CozyShop - Your Cozy Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #1A535C;
+            --light: #F7FFF7;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FFF5EE;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .search-bar {
+            display: flex;
+            margin: 0 1rem;
+        }
+
+        .search-bar input {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            width: 250px;
+        }
+
+        .search-bar button {
+            padding: 0.5rem;
+            background-color: var(--dark);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .user-actions a {
+            color: var(--light);
+            text-decoration: none;
+            margin-left: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* Home Page */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1556906781-2f0520405b71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .featured-products {
+            margin-top: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Forms */
+        .form-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Profile Page */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 2rem;
+            border: 4px solid var(--secondary);
+        }
+
+        .profile-info h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            margin-right: 2rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Cart Page */
+        .cart-items {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1.5rem;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            margin: 0 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .remove-btn {
+            color: #ff4d4d;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cart-summary {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .summary-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-top: 2px solid #eee;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 1.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            .search-bar {
+                margin: 1rem 0;
+                width: 100%;
+            }
+            
+            .search-bar input {
+                width: 100%;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <i class="fas fa-store"></i> CozyShop
+            </a>
+            
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search for products...">
+                <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('products')">Products</a></li>
+                    <li><a href="#" onclick="showPage('sell')">Sell</a></li>
+                    <li><a href="#" onclick="showPage('cart')">Cart <span id="cart-count">0</span></a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <a href="#" onclick="showPage('profile')"><i class="fas fa-user"></i></a>
+                <a href="#" onclick="showPage('cart')"><i class="fas fa-shopping-cart"></i></a>
+                <a href="#" onclick="toggleAuth()" id="auth-btn">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>Welcome to CozyShop</h1>
+                <p>Your cozy marketplace for unique products and handmade items</p>
+                <a href="#" class="btn" onclick="showPage('products')">Shop Now</a>
+            </div>
+            
+            <div class="featured-products">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="products-grid" id="featured-products">
+                    <!-- Products will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Page -->
+        <section id="products" class="page">
+            <h2 class="section-title">All Products</h2>
+            <div class="products-grid" id="all-products">
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Sell Page -->
+        <section id="sell" class="page">
+            <h2 class="section-title">Sell Your Product</h2>
+            <div class="form-container">
+                <form id="product-form" onsubmit="addProduct(event)">
+                    <div class="form-group">
+                        <label for="product-name">Product Name</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">Price ($)</label>
+                        <input type="number" id="product-price" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-image">Image URL</label>
+                        <input type="url" id="product-image" required>
+                    </div>
+                    <button type="submit" class="btn">Add Product</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Cart Page -->
+        <section id="cart" class="page">
+            <h2 class="section-title">Your Cart</h2>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be loaded here by JavaScript -->
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>$5.00</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="btn" style="width: 100%; margin-top: 1rem;" onclick="checkout()">Checkout</button>
+            </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section id="profile" class="page">
+            <div class="profile-header">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="User Avatar" class="profile-avatar">
+                <div class="profile-info">
+                    <h1 id="profile-name">Guest User</h1>
+                    <p>Member since <span id="member-since">2023</span></p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value" id="products-sold">0</div>
+                            <div class="stat-label">Products Sold</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="products-bought">0</div>
+                            <div class="stat-label">Products Bought</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Your Products</h2>
+            <div class="products-grid" id="user-products">
+                <!-- User's products will be loaded here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Login/Signup Page -->
+        <section id="auth" class="page">
+            <div class="form-container">
+                <h2 class="form-title" id="auth-title">Login</h2>
+                <form id="auth-form" onsubmit="handleAuth(event)">
+                    <div class="form-group">
+                        <label for="auth-email">Email</label>
+                        <input type="email" id="auth-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="auth-password">Password</label>
+                        <input type="password" id="auth-password" required>
+                    </div>
+                    <div class="form-group" id="auth-name-group" style="display: none;">
+                        <label for="auth-name">Full Name</label>
+                        <input type="text" id="auth-name">
+                    </div>
+                    <button type="submit" class="btn" id="auth-submit">Login</button>
+                </form>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="toggleAuthMode()" id="auth-toggle">Create an account</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CozyShop</h3>
+                <p>Your cozy marketplace for unique products and handmade items.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('products')">Products</a></li>
+                    <li><a href="#" onclick="showPage('sell')">Sell</a></li>
+                    <li><a href="#" onclick="showPage('cart')">Cart</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: info@cozyshop.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+                <p>Address: 123 Cozy Street, Comfort City</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 CozyShop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data storage
+        let currentUser = null;
+        let isLoginMode = true;
+        let products = [
+            {
+                id: 1,
+                name: "Handmade Ceramic Mug",
+                price: 24.99,
+                description: "A beautiful handmade ceramic mug with unique glaze patterns.",
+                image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                seller: "craftyhands"
+            },
+            {
+                id: 2,
+                name: "Knitted Wool Scarf",
+                price: 32.50,
+                description: "Warm and cozy knitted scarf made from 100% merino wool.",
+                image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                seller: "knitwit"
+            },
+            {
+                id: 3,
+                name: "Wooden Cutting Board",
+                price: 45.00,
+                description: "Handcrafted walnut cutting board with elegant grain patterns.",
+                image: "https://images.unsplash.com/photo-1558901357-ca41e027e43a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                seller: "woodworks"
+            },
+            {
+                id: 4,
+                name: "Macrame Wall Hanging",
+                price: 38.00,
+                description: "Bohemian style macrame wall decor with wooden beads.",
+                image: "https://images.unsplash.com/photo-1580637250481-b78db3e6f84b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                seller: "macramemagic"
+            }
+        ];
+        
+        let cart = [];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            updateCartCount();
+            checkAuthStatus();
+        });
+        
+        // Page navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            // Load specific page data
+            if (pageId === 'products') {
+                loadAllProducts();
+            } else if (pageId === 'profile') {
+                loadUserProfile();
+            } else if (pageId === 'cart') {
+                loadCart();
+            }
+        }
+        
+        // Authentication functions
+        function toggleAuth() {
+            showPage('auth');
+            updateAuthUI();
+        }
+        
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            updateAuthUI();
+        }
+        
+        function updateAuthUI() {
+            const authTitle = document.getElementById('auth-title');
+            const authSubmit = document.getElementById('auth-submit');
+            const authToggle = document.getElementById('auth-toggle');
+            const authNameGroup = document.getElementById('auth-name-group');
+            
+            if (isLoginMode) {
+                authTitle.textContent = 'Login';
+                authSubmit.textContent = 'Login';
+                authToggle.textContent = 'Create an account';
+                authNameGroup.style.display = 'none';
+            } else {
+                authTitle.textContent = 'Sign Up';
+                authSubmit.textContent = 'Sign Up';
+                authToggle.textContent = 'Already have an account? Login';
+                authNameGroup.style.display = 'block';
+            }
+        }
+        
+        function handleAuth(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            
+            if (isLoginMode) {
+                // Simulate login
+                currentUser = {
+                    name: "Jane Doe",
+                    email: email,
+                    memberSince: 2023,
+                    productsSold: 3,
+                    productsBought: 7
+                };
+                
+                showPage('home');
+                updateAuthStatus();
+            } else {
+                const name = document.getElementById('auth-name').value;
+                
+                // Simulate signup
+                currentUser = {
+                    name: name,
+                    email: email,
+                    memberSince: new Date().getFullYear(),
+                    productsSold: 0,
+                    productsBought: 0
+                };
+                
+                showPage('home');
+                updateAuthStatus();
+            }
+        }
+        
+        function checkAuthStatus() {
+            // Check if user is logged in (in a real app, this would check localStorage or cookies)
+            if (currentUser) {
+                updateAuthStatus();
+            }
+        }
+        
+        function updateAuthStatus() {
+            const authBtn = document.getElementById('auth-btn');
+            
+            if (currentUser) {
+                authBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+                authBtn.onclick = logout;
+            } else {
+                authBtn.innerHTML = 'Login';
+                authBtn.onclick = toggleAuth;
+            }
+        }
+        
+        function logout() {
+            currentUser = null;
+            updateAuthStatus();
+            showPage('home');
+        }
+        
+        // Product functions
+        function loadProducts() {
+            const featuredContainer = document.getElementById('featured-products');
+            featuredContainer.innerHTML = '';
+            
+            // Display first 4 products as featured
+            products.slice(0, 4).forEach(product => {
+                featuredContainer.innerHTML += createProductCard(product);
+            });
+        }
+        
+        function loadAllProducts() {
+            const productsContainer = document.getElementById('all-products');
+            productsContainer.innerHTML = '';
+            
+            products.forEach(product => {
+                productsContainer.innerHTML += createProductCard(product);
+            });
+        }
+        
+        function createProductCard(product) {
+            return `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <div class="product-actions">
+                            <button class="btn" onclick="addToCart(${product.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function addProduct(event) {
+            event.preventDefault();
+            
+            if (!currentUser) {
+                alert('Please login to add a product');
+                toggleAuth();
+                return;
+            }
+            
+            const name = document.getElementById('product-name').value;
+            const price = parseFloat(document.getElementById('product-price').value);
+            const description = document.getElementById('product-description').value;
+            const image = document.getElementById('product-image').value;
+            
+            const newProduct = {
+                id: products.length + 1,
+                name: name,
+                price: price,
+                description: description,
+                image: image,
+                seller: currentUser.name
+            };
+            
+            products.push(newProduct);
+            
+            // Reset form
+            document.getElementById('product-form').reset();
+            
+            alert('Product added successfully!');
+            showPage('products');
+            loadAllProducts();
+        }
+        
+        // Cart functions
+        function addToCart(productId) {
+            if (!currentUser) {
+                alert('Please login to add items to cart');
+                toggleAuth();
+                return;
+            }
+            
+            const product = products.find(p => p.id === productId);
+            
+            const existingItem = cart.find(item => item.productId === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    productId: productId,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCartCount();
+            alert(`${product.name} added to cart!`);
+        }
+        
+        function loadCart() {
+            const cartContainer = document.getElementById('cart-items');
+            cartContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p style="text-align: center; padding: 2rem;">Your cart is empty</p>';
+                updateCartSummary();
+                return;
+            }
+            
+            cart.forEach(item => {
+                cartContainer.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-title">${item.name}</h3>
+                            <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+                        </div>
+                        <div class="cart-item-actions">
+                            <div class="quantity">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.productId}, ${item.quantity - 1})">-</button>
+                                <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity(${item.productId}, parseInt(this.value))">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.productId}, ${item.quantity + 1})">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${item.productId})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            updateCartSummary();
+        }
+        
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(productId);
+                return;
+            }
+            
+            const item = cart.find(item => item.productId === productId);
+            if (item) {
+                item.quantity = newQuantity;
+                loadCart();
+                updateCartCount();
+            }
+        }
+        
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.productId !== productId);
+            loadCart();
+            updateCartCount();
+        }
+        
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        
+        function updateCartSummary() {
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const total = subtotal + 5; // $5 shipping
+            
+            document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
+        }
+        
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty');
+                return;
+            }
+            
+            alert('Thank you for your purchase! This is a demo, so no real transaction occurred.');
+            cart = [];
+            loadCart();
+            updateCartCount();
+        }
+        
+        // Profile functions
+        function loadUserProfile() {
+            if (!currentUser) {
+                alert('Please login to view your profile');
+                toggleAuth();
+                return;
+            }
+            
+            document.getElementById('profile-name').textContent = currentUser.name;
+            document.getElementById('member-since').textContent = currentUser.memberSince;
+            document.getElementById('products-sold').textContent = currentUser.productsSold;
+            document.getElementById('products-bought').textContent = currentUser.productsBought;
+            
+            // Show user's products
+            const userProductsContainer = document.getElementById('user-products');
+            userProductsContainer.innerHTML = '';
+            
+            const userProducts = products.filter(product => product.seller === currentUser.name);
+            
+            if (userProducts.length === 0) {
+                userProductsContainer.innerHTML = '<p>You haven\'t listed any products yet.</p>';
+            } else {
+                userProducts.forEach(product => {
+                    userProductsContainer.innerHTML += createProductCard(product);
+                });
+            }
+        }
+        
+        // Search function
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            
+            if (!searchTerm) {
+                loadAllProducts();
+                return;
+            }
+            
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) || 
+                product.description.toLowerCase().includes(searchTerm)
+            );
+            
+            const productsContainer = document.getElementById('all-products');
+            productsContainer.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                productsContainer.innerHTML = '<p>No products found matching your search.</p>';
+            } else {
+                filteredProducts.forEach(product => {
+                    productsContainer.innerHTML += createProductCard(product);
+                });
+            }
+            
+            showPage('products');
+        }
+    </script>
+</body>
+</html>
